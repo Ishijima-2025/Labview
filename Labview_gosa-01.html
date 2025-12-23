@@ -1,0 +1,92 @@
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+    processEscapes: true
+  },
+  TeX: {
+    extensions: ["mhchem.js"]
+  },
+  CommonHTML: {
+    matchFontHeight: false
+  }
+});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+
+	
+
+
+
+<link href="160324.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.style7 {color: #000000; }
+</style>
+<title>regression analysis</title>
+</head>
+
+<body>
+<p class="X-Large-Bold-RED">Labviewによる非線形近似での各推定値の誤差計算-01</p>
+<p class="Large-Bold-Red">&nbsp;</p>
+<p>今まで何回か，このサイトに，線形・非線形近似における各推定値の誤差の計算を行ってきました．</p>
+<p>いまのところ．．．．</p>
+<p class="Blue-Bold">　Python, R, Kyplot，で計算するのが一番簡単</p>
+<p class="Blue-Bold">　線形近似においては，エクセルでも十分対応可能</p>
+<p>ということでしたが，</p>
+<p class="Large-Bold-Red">　Labviewの非線形近似でも計算可能！</p>
+<p>ということがわかりましたので，説明していきたいと思います．</p>
+<p>&nbsp;</p>
+<p class="Large-Bold-Red">・Labviewのプログラム</p>
+<p>実際のLabviewのブロックダイヤグラムは，以下の通りです．</p>
+<p><img src="Labview-nonLinear-01.png" width="981" height="427" alt=""/></p>
+<p>&nbsp;</p>
+<p>つまり， </p>
+<p>　<span class="Red-Bold">非線形近似アイコンの，</span><span class="Large-Bold-Red">共分散</span></p>
+<p>を利用するのです．フロントパネルでは，</p>
+<p><img src="Labview-nonLinear-02.png" width="253" height="146" alt=""/></p>
+<p>となっており，このうち，<span class="Red-Bold">(0,0)=0.1, (1,1)=1.1</span></p>
+<p>を使います．ただ，</p>
+<p>　<span class="Blue-Bold">なんでこの値を使うと，推定誤差を計算できるのか．．．．よくわからない</span></p>
+<p>という情けなさがありますが，とりあえず使えそうです．</p>
+<p>&nbsp;</p>
+<p>・具体的な計算方法</p>
+<p>この共分散の対角にある値を，</p>
+<p>\( \Large Cov_{i,i} \)</p>
+<p>とします．</p>
+<p>そして，ｙの推定値を，</p>
+<p>\( \Large \hat{y} \)</p>
+<p>とします．</p>
+<p>Labviewでの計算は，</p>
+<p>\( \Large SE_a =  \displaystyle  \sqrt{ \frac{ \sum ( y - \hat{y})^2}{n-2} \times Cov_{0,0}} = \sqrt{ \frac{ 1.6}{5-2} \times 0.1} = 0.23094 \)</p>
+<p>\( \Large SE_b =  \displaystyle  \sqrt{ \frac{ \sum ( y - \hat{y})^2}{n-2} \times Cov_{1,1}} = \sqrt{ \frac{ 1.6}{5-2} \times 1.1} = 0.76594 \)</p>
+<p>と<a href="gosa-12.html">真面目に計算した結果</a>，と一致します．</p>
+<p><img src="Labview-nonLinear-03.png" width="832" height="886" alt=""/></p>
+<p>&nbsp;</p>
+<p><a href="gosa-11.html">真面目な計算の式</a>，は，</p>
+<p>\( \Large    \displaystyle SE_a =\sqrt{\frac{\sigma_a^2}{n-p}} \)</p>
+<p>\( \Large    \displaystyle SE_b =\sqrt{\frac{\sigma_b^2}{n-p}} \)</p>
+<p>となります．線形近似の場合には<span class="Red-Bold">パラメータが2個</span>なので，<span class="Large-Bold-Red">p=2</span></p>
+<p>\( \Large    \displaystyle \sigma_a^2      = \displaystyle   
+  \frac{ \sigma_y^2}{S_{xx}} 
+\)</p>
+<p>\( \Large    \displaystyle \sigma_b^2  =\sigma_y^2  
+\left\{ \frac{1}{n}+ \frac{\left( \bar{x} \right)^2 }{S_{xx}} \right\} \)</p>
+<p>\( \Large    \displaystyle \sigma_y^2  = 
+  \sum_{i=1}^N ( y_i - \hat{y})^2
+\)</p>
+<p>となるので，傾き，a，の推定量に関していえば，</p>
+<p>\( \Large Cov_{0,0} =   \displaystyle  \frac{1}{S_{xx}} \)</p>
+<p>となるようです．</p>
+<p>&nbsp;</p>
+<p>では，非線形の場合にも，この計算が成り立つかを，次ページ，でトライしてみましょう．</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span class="style7"><a href="kenkyu-2.html"><img src="TOP.png" alt="t" width="57" height="34" /></a></span><a href="Labview_gosa-02.html"><img src="R-arrow.png" alt="r" width="57" height="34" /></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
