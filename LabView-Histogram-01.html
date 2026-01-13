@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>無題ドキュメント</title>
+<link href="160324.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<p class="X-Large-Bold-RED">LabViewでのヒストグラムの表示法</p>
+<p>もちろん，LabViewにヒストグラムのコマンドはあります．</p>
+<p>数学　-&gt;　確率と統計　-&gt;　ヒストグラム or 一般ヒストグラム</p>
+<p>と言うように．</p>
+<p><img src="LabView-Histogram-01.jpg" width="178" height="209" /></p>
+<p>問題なのは，</p>
+<p>　<span class="X-Large-Blue">binの間隔ではなく，binの本数でしか設定ができない</span></p>
+<p>と言う点にあります．</p>
+<p>ヘルプを見ると，</p>
+<p><img src="LabView-Histogram-02.jpg" width="230" height="172" /></p>
+<p>この，間隔，というところのヘルプを見ると，<br />
+　間隔は0よりも大きくなければなりません。間隔が0以下の場合、ヒストグラムは未定義で、VIはヒストグラム: h(x)およびX値を空の配列に設定してエラーを返します。デフォルトは10です。<br />
+というようにその意味合いではなく，制限，しか書かれていません．</p>
+<p>そこで，<span class="Large-Bold-Red">間隔（本数）ではなく，binの幅を設定できないか</span>，考えてみました．</p>
+<p>まずは，以下のようなプログラムを作成します．</p>
+<p><img src="LabView-Histogram-03.jpg" width="222" height="86" /></p>
+<p>０，と１０，という値の配列を作成し，実行すると，（間隔は１０）</p>
+<p><img src="LabView-Histogram-04.jpg" width="405" height="388" /></p>
+<p>と言う結果が出ます．つまり，結論から言うと，</p>
+<p>　<span class="Large-Bold-Red">X値（ヒストグラムのbinの幅）　＝　（最大値　－　最小値）　÷　間隔</span></p>
+<p>となるわけです．</p>
+<p>もう少し複雑な配列で調べると，</p>
+<p><img src="LabView-Histogram-05.jpg" width="405" height="376" /></p>
+<p>となり，上記の式は正しいことがわかります　（10-2）÷10 = 0.8．<br />
+しかし，X値の最初の値は，2.40，となっています．これはどのような関係なのでしょう?<br />
+結論から言うと，</p>
+<p>　X値の初期値　＝　X値　÷　２　＋　最小値</p>
+<p>であることがわかります．ですので，binの幅を指定するには，</p>
+<p>　<span class="Large-Bold-Red">間隔　＝　（最大値　－　最小値）　÷　</span><span class="Large-Bold-Red">X値（ヒストグラムのbinの幅）</span></p>
+<p>を計算して，ヒストグラムのコマンドに入力すればよいことがわかります．</p>
+<p>また，<span class="Red-Bold">どのbinにカウントするか</span>，ですが，上の図を見てもらえればよいと思いますが，</p>
+<p>　8.8の値　→　8.8のbin<br />
+　8.4の値　→　8.8のbin<br />
+　8.3.5の値　→　8.0のbin</p>
+<p>となっています．従って，binの表示の意味は，</p>
+<p>　8.8　：　8.4以上，9.2未満</p>
+<p>に入ることになり，</p>
+<p>　<span class="Large-Bold-Red">X<sub>i</sub> - binの幅/2 &lt;= data &lt; X<sub>i+1</sub> + binの幅/2</span></p>
+<p>と言うことになるかと思います．</p>
+<p><span class="Large-Bold-Red">X値が整数であったり，自然数であったり，と言う離散的な場合</span>には，どう対応しましょう．<br />
+たとえば，<a href="Dice-01.html">サイコロを振った回数</a>，など．</p>
+<p>先ほどと同様な計算を行うと（配列の値をちょっと変えていますが）</p>
+<p><img src="LabView-Histogram-06.jpg" width="413" height="365" /></p>
+<p>と言うようになるわけです．<br />
+なので，<span class="Red-Bold">X値からbinの幅の半分を引けばよい</span>訳なので，</p>
+<p><img src="LabView-Histogram-07.jpg" width="458" height="372" /></p>
+<p>となります．．．．．<span class="X-Large-RED">が！</span></p>
+<p>なんと最後のbinが９です．データは１０まであるのに．．．．<br />
+  まあ，気にしなくてもいい，という考えもありますが．．．．きちんと行うためには，<br />
+  　一般ヒストグラム<br />
+で，最大値，最小値を指定する方法がよいかと思います．</p>
+<p>以下が，一般ヒストグラムを用いた方法です．</p>
+<p><img src="LabView-Histogram-08.jpg" width="553" height="151" /></p>
+<p><img src="LabView-Histogram-09.jpg" width="533" height="342" /></p>
+<p>このようにきれいにカウントできていることがわかります．<br />
+</p>
+<p>&nbsp;</p>
+<p><a href="Tool.html">戻る</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

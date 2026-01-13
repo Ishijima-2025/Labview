@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>無題ドキュメント</title>
+<link href="160324.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<p class="X-Large-RED">-Inf，が出てきたら</p>
+<p>X，Yの配列からXYグラフを作成する場合には，</p>
+<p><img src="LabView-Inf-01.jpg" width="203" height="125" /></p>
+<p>というプログラムを作ればできあがります．フロントパネルは，</p>
+<p><img src="LabView-Inf-02.jpg" width="578" height="225" /></p>
+<p>となっています．</p>
+<p>問題は，</p>
+<p>　<span class="Red-Bold">片対数で表示したい　（＝ln Y で表示したい）</span></p>
+<p>場合に，不都合なことが現れます．具体的には，</p>
+<p><img src="LabView-Inf-03.jpg" width="678" height="233" /></p>
+<p>と，ln(0)が計算不能となり，&quot;-Inf&quot;，という表示となります．<br />
+これでもグラフは作成できます（その場合は0を示すようです），が，”近似曲線”などを行おうとすると，エラーが発生します．</p>
+<p>何とか，&quot;-Inf&quot;，を削除できないかと思ったところ，意外な事実がわかりました．それは，</p>
+<p class="X-Large-Blue">　-Inf　も数字として認識する</p>
+<p>と言うものです．つまり，<br />
+  <span class="Red">　-Inf　と言う値の場合，その配列を削除する<br />
+  　　or<br />
+  　-Inf　以外の配列だけをピックアップする</span><br />
+という方法が使えます．</p>
+<p>今回は後者の手法を用いてみましょう．<br />
+この場合には，ケースストラクチャ，シフトレジスタ，を使います．</p>
+<p>具体的なプログラムは，</p>
+<p><img src="LabView-Inf-04.jpg" width="644" height="289" /></p>
+<p>となります．<span class="Red">-Inf，をあたかも数値のように扱っています</span>ね．<br />
+注意すべき点は，Xの配列も同様の処理をしていることです．<br />
+Yだけだと配列の数が変わってしまいます．<br />
+また，ケースストラクチャの，false，は直結しています．</p>
+<p>結果が以下の通りです．</p>
+<p><img src="LabView-Inf-05.jpg" width="937" height="239" /></p>
+<p>このように，Yの配列の条件により，X，Yの配列を修正していることがわかります．</p>
+<p><a href="Tool.html">戻る</a></p>
+</body>
+</html>

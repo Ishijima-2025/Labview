@@ -1,0 +1,141 @@
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+    processEscapes: true
+  },
+  TeX: {
+    extensions: ["mhchem.js"]
+  },
+  CommonHTML: {
+    matchFontHeight: false
+  }
+});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+
+	
+
+
+
+<link href="160324.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.style7 {color: #000000; }
+</style>
+<title>regression analysis</title>
+</head>
+
+<body>
+<p class="X-Large-Bold-RED">Labviewによる非線形近似での各推定値の誤差計算-01</p>
+<p class="Large-Bold-Red">&nbsp;</p>
+<p>つぎは，</p>
+<p>　<span class="Large-Bold-Red">指数関数　＋　一定値</span></p>
+<p>\( \Large a1*exp(-a2*x)+a3 \)</p>
+<p>です．</p>
+<p><span class="Red-Bold">蛍光の退色（背景光あり）</span>，などの場合によく使われる計算式です．</p>
+<p>エクセルでは，指数近似（対数にして直線近似）がありますが，一定値を含む場合には適用できません．</p>
+<p>実際のLabviewでのブロックダイヤグラムは，</p>
+<p><img src="Labview-nonLinear-04.png" width="1032" height="461" alt=""/></p>
+<p>となり，前ページ同様，共分散とｙの推定値とｙの差分値を使っています．</p>
+<p>フロントパネルは，</p>
+<p><img src="Labview-nonLinear-05.png" width="983" height="746" alt=""/></p>
+<p>となり，推定値を計算できていて，</p>
+<p>\( \Large SE_{a1} = 0.37708 \)</p>
+<p>\( \Large SE_{a2} = 0.04408 \)</p>
+<p>\( \Large SE_{a3} = 0.26931 \)</p>
+<p>となります．<span class="Blue">パラメータが3つあるので</span>，<span class="Blue-Bold">n-3</span>，としていることに注意です．</p>
+<p>&nbsp;</p>
+<p>同じデータで，R，Kyplotで計算した結果は，<a href="Non-linear regression-17.html">ここ</a>，にありますように，</p>
+<p>Rでの近似を行ってみると，</p>
+<p>プログラムは，</p>
+<p>xx &lt;- c(0,2,3,4,6,9)<br />
+  yy &lt;- c(11,5,3,2,1.5,1.1)<br />
+  plot(xx,yy)<br />
+  fm&lt;-nls(yy~a0*exp(-a1*xx)+a2,start=c(a0=10,a1=0.5,a2=1),trace=TRUE)<br />
+  summary(fm)<br />
+</p>
+<p>で，結果は，</p>
+<table width="436" border="1">
+  <tbody>
+    <tr>
+      <td colspan="2">Parameters:</td>
+      <td width="108"></td>
+      <td width="74"></td>
+      <td width="73"></td>
+      <td width="57"></td>
+    </tr>
+    <tr>
+      <td width="20"></td>
+      <td width="64">Estimate</td>
+      <td>Std. Error</td>
+      <td>t value</td>
+      <td>Pr(&gt;|t|)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00">a0</td>
+      <td align="right" bgcolor="#FFFF00">10.16402</td>
+      <td align="right" bgcolor="#FFB100">0.37708</td>
+      <td align="right" bgcolor="#FFFFFF">26.954</td>
+      <td align="right" bgcolor="#FFFFFF">0.000112</td>
+      <td bgcolor="#FFFFFF">***</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00">a1</td>
+      <td align="right" bgcolor="#FFFF00">0.49456</td>
+      <td align="right" bgcolor="#FFFF00">0.04408</td>
+      <td align="right">11.219</td>
+      <td align="right">0.001518</td>
+      <td>**</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00">a2</td>
+      <td align="right" bgcolor="#FFFF00">0.88393</td>
+      <td align="right" bgcolor="#FFFF00">0.26931</td>
+      <td align="right">3.282</td>
+      <td align="right">0.046348</td>
+      <td>*</td>
+    </tr>
+  </tbody>
+</table>
+<p>となり，<a href="https://www.kyenslab.com/ja-jp/" target="_blank">Kyplot</a>においても，</p>
+<table width="280" border="1">
+  <tbody>
+    <tr>
+      <td width="19"></td>
+      <td width="115">推定値</td>
+      <td width="124">標準誤差(SE)</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00">A1</td>
+      <td align="right" bgcolor="#FFFF00">10.16401</td>
+      <td align="right" bgcolor="#FFB700">0.377081</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00">A2</td>
+      <td align="right" bgcolor="#FFFF00">0.494562</td>
+      <td align="right" bgcolor="#FFFF00">0.044083</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00">A3</td>
+      <td align="right" bgcolor="#FFFF00">0.883926</td>
+      <td align="right" bgcolor="#FFFF00">0.269308</td>
+    </tr>
+  </tbody>
+</table>
+<p>と一致した結果となります．</p>
+<p>&nbsp;</p>
+<p>わざわざ，Labview，を使わずに，R，を使えばいいんじゃない？，と言われそうですが，</p>
+<p>　<span class="Blue">Labviewでプログラム　→　結果をcsvで出力　→　Rで解析</span></p>
+<p>という手間なく，一つのプログラムで完結できるのはやはり便利ですね．選択肢が広がることはよいことです．</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span class="style7"><a href="Labview_gosa-01.html"><img src="L-arrow.png" alt="l" width="57" height="34" border="0" /></a><a href="index.html"><img src="TOP.png" alt="t" width="57" height="34" /></a></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

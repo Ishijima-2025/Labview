@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Waveform Graph-13</title>
+<link href="160324.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.style10 {color: #000000; }
+</style>
+</head>
+
+<body>
+<p class="X-Large-Bold-RED">波形チャート</p>
+<p>波形チャートは連続的なデータの表示に適しています．<br />
+ちょうど，オシロスコープのように．</p>
+<p>実際に連続波形を表示してみましょう．</p>
+<p><img src="LabView-Graph-111.png" width="702" height="258" /></p>
+<p>連続波形は正弦波，見やすいように待機アイコンを設置し，WhileLoopで動かしています．</p>
+<p>これは簡単ですね．</p>
+<p>&nbsp;</p>
+<p class="X-Large-RED">横軸の値</p>
+<p>上図では横軸は100データ表示しています．</p>
+<p>自動スケールX，にチェックを入れて見ると，</p>
+<p><img src="LabView-Graph-112.png" width="704" height="259" /></p>
+<p>となり，最大1024ポイント表示できます．この値を変更するには，</p>
+<p class="Red">フロントパネル　→　波形チャートのプロパティ　→　<span class="Large-Bold-Red">チャート履歴の長さ</span></p>
+<p>の値を変更してみてください．2048にすると，</p>
+<p><img src="LabView-Graph-113.png" width="700" height="253" /></p>
+<p>横軸が2048ポイントになることがわかります．この値は使用しているPCのメモリに依存します（<a href="http://zone.ni.com/reference/ja-XX/help/371361J-0112/lvdialog/chart_history_length_db/" target="_blank">参考</a>）．</p>
+<p>&nbsp;</p>
+<p class="X-Large-RED">初期値</p>
+<p>問題は，実行→停止→実行，と繰り返すと横軸が初期化されずに前回の値からスタートしてしまいます．<br />
+実行ごとに０からスタートさせるにはどうしたらよいでしょう？<br />
+そのためには，<br />
+　プロパティノード<br />
+が必要となります．</p>
+<p>ブロックダイヤグラム　→　作成　→　<span class="Large-Bold-Red">プロパティノード</span>　→　<span class="Large-Bold-Red">履歴データ</span></p>
+<p>を実行します．</p>
+<p>&nbsp;</p>
+<p><img src="LabView-Graph-114.png" width="460" height="855" /></p>
+<p>すると，このようなアイコンが現れますので，設置します．</p>
+<p><img src="LabView-Graph-115.png" width="705" height="291" /></p>
+<p>このアイコンは右に端子があるので，<br />
+　現在の状況を出力<br />
+状態になっています．これを，<br />
+　右クリック　→　<span class="Large-Bold-Red">すべて書き込みに変更</span><br />
+にしてください．そして，左端子上で，<br />
+　右クリック　→　定数<br />
+で図のような０の配列を作ります．</p>
+<p><img src="LabView-Graph-116.png" width="698" height="291" /></p>
+<p>実行すると，毎回０からスタートする波形チャートが完成します．</p>
+<p>&nbsp;</p>
+<p><span class="style10"><a href="LabView-Graph-12.html"><img src="L-arrow.png" alt="l" width="57" height="34" /></a> <a href="index.html"><img src="TOP.png" alt="t" width="57" height="34" /></a></span><a href="LabView-Graph-12.html"><img src="R-arrow.png" alt="r" width="57" height="34" border="0" /></a></p>
+</body>
+</html>

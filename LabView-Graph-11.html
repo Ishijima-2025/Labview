@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Waveform Graph-11</title>
+<link href="160324.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.style10 {color: #000000; }
+</style>
+</head>
+
+<body>
+<p class="X-Large-Bold-RED">エラーバープロット-02</p>
+<p>データの信頼性，ばらつきを示すためには，<span class="Large-Bold-Red">エラーバー</span>，が必要となります．<br />
+しかし，エクセルなどでエラーバーを作成するのは一苦労．</p>
+<p>LabViewではさりげなく実装されています．</p>
+<p>まずは，X,Yデータと上下のエラーの値の配列を作りましょう．</p>
+<p><img src="LabView-Graph-101.png" width="896" height="446" /></p>
+<p>一般的なエラーバーは上下同じ値ですが，今回は別の値を用いましょう．<br />
+もちろん，X,Y，エラーの上下の配列の数は同じにします．</p>
+<p>エラーバープロットアイコンを設置しましょう．</p>
+<p><img src="LabView-Graph-102.png" width="613" height="407" /></p>
+<p>ブロックダイヤグラムを見ると，X，Y，さらに，エラーaパーセンテージ，エラーbパーセンテージの端子があります．<br />
+ここで，<br />
+<span class="Blue-Bold">　エラーaパーセンテージ　：　上側のエラー値　<br />
+　エラーbパーセンテージ　：　下側のエラー値</span><br />
+となります．</p>
+<p>配線して実行すると，</p>
+<p><img src="LabView-Graph-103.png" width="862" height="410" /></p>
+<p>となります．ちゃんとエラーバーが表示されましたね．</p>
+<p>しかし，よく見るとエラーバーの大きさが変ですね，これは初期状態ではエラー値をパーセンテージで計算しているからです．<br />
+　<span class="Blue-Bold">エラー＝１　→　Yの値の100％の大きさ</span><br />
+となってしまいます．</p>
+<p>ですので，ブロックダイヤグラムから，<span class="X-Large-Blue">固定</span>，に変更すると，</p>
+<p><img src="LabView-Graph-104.png" width="863" height="411" /></p>
+<p>エラーの値に応じたエラーバーが作成できます．</p>
+<p>初期状態のグラフは素っ気ないので，いろいろとデザインしたいですね．ここで注意です．<br />
+　<span class="Blue-Bold">なぜかプロパティが二つある</span><br />
+のです．<br />
+凡例の下をクリックすると，</p>
+<p><img src="LabView-Graph-105.png" width="485" height="344" /></p>
+<p>凡例を含んだグラフ全体が指定されます，この状態では<span class="Blue-Bold">グラフの位置は変更できてもグラフのデザインは変更できません．</span><br />
+ですので，<br />
+　<span class="Large-Bold-Red">グラフ上（白いマス目の場所）を右クリック</span><br />
+してデザインを変更してください（なんでこんな面倒なことをしたのだろう？？？，２０１３でも同じでした）</p>
+<p><img src="LabView-Graph-106.png" width="864" height="413" /></p>
+<p>ちょっとは見やすくなったでしょうか．．．</p>
+<p>棒グラフにしたいときには，プロパティで，左下の（ポイント/塗りつぶしカラーの左）を変更することで可能です．</p>
+<p><img src="LabView-Graph-107.png" width="854" height="489" /></p>
+<p>次ページに，エラーバープロットをオーバープロットする方法を示します．</p>
+<p><span class="style10"><a href="LabView-Graph-06.html"><img src="L-arrow.png" alt="l" width="57" height="34" /></a> <a href="index.html"><img src="TOP.png" alt="t" width="57" height="34" /></a></span><a href="LabView-Graph-12.html"><img src="R-arrow.png" alt="r" width="57" height="34" border="0" /></a></p>
+</body>
+</html>
